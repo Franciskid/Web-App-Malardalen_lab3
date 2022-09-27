@@ -18,9 +18,9 @@
             class="gobackButton"
             type="submit"
             value="/AdminPage.html"
-            title="Disconnect"
+            title="HomePage"
           >
-            Disconnect
+            HomePage
           </button>
         </form>
       </div>
@@ -56,5 +56,37 @@
         <li>Ass2News3rd.json</li>
       </ul>
     </div>
+    <?php
+      $db = new mysqli("localhost", "root", "root", "assignment3");
+      if ($db->connect_error) {
+        die("Could not connect: " . mysqli_connect_error());
+      }
+
+      $files = array("Ass2News.json", "Ass2News2nd.json", "Ass2News3rd.json");
+      foreach ($files as $file) {
+        $path = "Ressources/".$file;
+        $json = file_get_contents($path);
+        $data = json_decode($json, true);
+        foreach ($data['news'] as $key => $value) {
+          $title = $value['title'];
+          $content = $value['content'];
+          $date = $value['date'];
+          if (isset($value['imgurl'])) {
+            $image = $value['imgurl'];
+            if (isset($value['previewContent'])) {
+              $previewContent = $value['previewContent'];
+              $db->query("INSERT IGNORE INTO news (title, date, preview_content, content, image_path) VALUES ('$title', '$date', '$previewContent', '$content', '$image')");
+            } else {
+              $db->query("INSERT IGNORE INTO news (title, date, content, image_path) VALUES ('$title', '$date', '$content', '$image')");
+            }
+          }
+          else {
+            $db->query("INSERT IGNORE INTO news (title, date, content) VALUES ('$title', '$date', '$content')");
+          }
+        }
+      }
+
+      $db->close();
+    ?>
   </body>
 </html>
