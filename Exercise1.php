@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
-}
-$cookie_name = "user";
-$cookie_value = get_current_user();
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+  $cookie_name = "user";
+  $cookie_value = get_current_user();
 
-if (!isset($_SESSION['user'])) {
-  $_SESSION["user"] = $cookie_value;
-}
-if (!isset($_SESSION['rememberme'])) {
-  $_SESSION["rememberme"] = "";
-}
+  if (!isset($_SESSION['user'])) {
+    $_SESSION["user"] = $cookie_value;
+  }
+  if (!isset($_SESSION['rememberme'])) {
+    $_SESSION["rememberme"] = "";
+  }
 
-function checkArrayNotEmpty($array) {
-  return count(array_filter($array)) == count($array);
-}
-
+  function checkArrayNotEmpty($array) {
+    return count(array_filter($array)) == count($array);
+  }
 ?>
 <html>
   <head>
@@ -82,6 +81,14 @@ function checkArrayNotEmpty($array) {
         <div class="nasaEventsDiv">
           <div class="nasaEventDivText">
             <?php
+              // $db = new mysqli("localhost", "root", "root", "assignment3");
+              // if ($db->connect_error) {
+              //   die("Could not connect: " . mysqli_connect_error());
+              // }
+
+              // $news = $db->query("SELECT * FROM news ORDER BY date DESC LIMIT 1;");
+
+
               $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
               $params = parse_url($url);
               if (array_key_exists("query", $params) == 1 and checkArrayNotEmpty($params)) {
