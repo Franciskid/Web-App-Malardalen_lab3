@@ -1,0 +1,305 @@
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: Helvetica, sans-serif;
+    width: 70%;
+    min-width: 700px;
+    margin: 0px auto;
+}
+.inline {
+    display: flex;
+}
+.inline-nav {
+    margin-left: 130px;
+    display: flex;
+    margin-top: 10px;
+    font-size: 20px;
+}
+.inline input[type=text] {
+    margin-left: 20px;
+    right: 0;
+    width: 150px;
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+    color: white;
+    background-color: #2e3330;
+    background-image: url(Ressources/magnifying_glass.png);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+.inline-nav > nav > a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 15px;
+}
+.small-nav {
+    background-color: #404040;
+    padding: 6px;
+    max-width: 900px;
+    margin-left: 30px;
+    margin-right: 10px;
+    margin-top: 35px;
+}
+.small-nav > a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+}
+.admin-icon {
+    width: 25px;
+    height: 25px;
+    cursor:pointer;
+    background: url(Ressources/padlock.png) no-repeat;
+    background-size: 15px;
+    margin-top: 8px;
+    margin-left: 6px;
+    border: none;
+}
+.sharing-icon {
+  width: 25px;
+  cursor:pointer;
+  background: url(Ressources/sharing.png);
+  background-size: 15px;
+  margin-top: 8px;
+  margin-left: 6px;
+  background-repeat: no-repeat;
+  border: none;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% auto;
+    gap: 10px;
+    background-color: black;
+    padding: 10px;
+  }
+  
+  .grid-container > div {
+    max-height: 200px;
+    min-height: 200px;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .grid-container img {
+    min-width: 100%;
+  }
+  
+  .item1 {
+    grid-column-start: 1;
+    grid-column-end: 5;
+    max-height: 220px;
+    position: relative;
+  }
+  .item1 img {
+    height: 400px;
+    top: -75px;
+    position: absolute;
+  }
+  
+  .item2 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  
+    position: relative;
+  }
+  
+  .item3 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    position: relative;
+  }
+  .item3 img {
+    height: 300px;
+    top: -50px;
+    position: absolute;
+  }
+
+  .toHideOnHover {
+    display: block;
+    position: absolute;
+    width:100%;
+    min-height: 10%;
+    bottom: 0;
+    z-index: 1;
+  }
+  .toShowOnHover {
+    visibility: hidden;
+    position: absolute;
+    z-index: 0;
+    overflow: scroll;
+    height: 100%;
+    width:100%;
+  }
+
+  .containerHiddenBoxes {
+    display: block;
+    position:absolute; 
+    width:100%; 
+    height:100%; 
+    bottom: 0; 
+  }
+
+ .toHideOnHover:hover > .toHideOnHoverChild {
+    visibility: hidden;
+  }
+  
+ .toHideOnHover:hover ~ .toShowOnHover {
+  visibility: visible;
+}
+
+
+
+  .item4 {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    position: relative;
+  }
+
+  .item4 img {
+    height: 400px;
+    top: -50px;
+    position: absolute;
+  }
+  
+  .item5 {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    position: relative;
+  }
+  .item5 iframe {
+    height: 100%;
+    position: absolute;
+  }
+  
+  .item6 {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    position: relative;
+  }
+  
+  .item7 {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    position: relative;
+    height: 100%;
+  }
+  /* .item7 img {
+    height: 200px;
+    left: -20px;
+    position: absolute;
+  } */
+  
+  .eventText {
+    padding-top: 10px;
+    font-size: 11px;
+  }
+  .nasaEventsDiv {
+    background-color: #2196f3;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+  .nasaEventsDivScrollbar {
+    width: 100%;
+    height: 1px;
+    background-color: white;
+  }
+
+  .nasaEventDivText {
+    height: 70%; 
+    overflow: scroll;
+    width: 90%;
+  }
+  
+  .eventNasaDivBottom {
+    height: 20%;
+    position: relative;
+    font-size: 12px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .eventNasaDivBottomStretch > span{
+    cursor: pointer;
+  }
+  
+  .nasaEventsDivBorderLine {
+    width: 90%;
+    height: 1px;
+    background-color: white;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 20px;
+  }
+  
+  .eventNasaDivBottomStretch {
+    display:flex;
+    justify-content:space-between;
+    width: 80%;
+    margin-right: 20px;
+    margin-left: 20px;
+    bottom: 0;
+    position: absolute;
+  }
+  
+  .nasaStuff {
+    background-color: white;
+    color: black;
+    z-index: 1;
+    position: absolute;
+    max-width: calc(50% - 35px);
+    right: 0;
+    height: 100%;
+    padding: 0px 10px 10px 10px;
+    text-align: justify;
+    text-justify: inter-word;
+    overflow: scroll;
+  }
+
+  .titleOver {
+    position:absolute;
+    width:fit-content;
+    background-color:rgb(126, 126, 203);
+    bottom:58px;
+    left:20px;
+    padding:10px;
+    font-size:16px;
+    opacity: 0.7;
+  }
+
+  .textOver {
+    position:absolute;
+    width:210px;
+    background-color:white;
+    bottom:30px;
+    left:20px;
+    padding-left:10px;
+    padding-top:10px;
+    font-size:16px;
+    opacity: 0.7;
+  }
+
+  .titleOver2 {
+    background-color:rgb(126, 126, 203);
+    width: fit-content;
+    padding:5px;
+    font-size:16px;
+    opacity: 0.7;
+  }
+
+  .textOver2 {
+    background-color:white;
+    padding:10px;
+    height: 100%;
+    font-size:15px;
+    opacity: 0.7;
+    overflow:scroll;
+    height: 100%;
+  }
+
+  .textDecoration {
+    color: #000000;
+  }

@@ -1,0 +1,37 @@
+.login-container {
+    margin: 0 auto;
+    position: relative;
+    border: 1px solid white;
+    box-shadow: 5px 10px 0px white;
+    width: 40%;
+    display:block;
+    padding: 30px;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 3px 0 15px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+#rememberme {
+    float: right;
+    position: relative;
+    margin-top: 5px;
+  }
+
+  .login-container > div > form > button
+  {
+    font-size: 15px;
+  }
+
+  .login-container > div {
+    margin: 15px 15px;
+    margin-bottom: 15px;
+    display:flex; 
+    justify-content: space-between;
+  }
