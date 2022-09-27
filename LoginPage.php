@@ -29,23 +29,53 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
   </div>
   <div class="content">
-    <div class="login-container">
+    <form name="loginForm" action="javascript:changeURL()" onsubmit="return validationLoginForm()">
       <label for="uname"><b>Username</b></label>
       <input type="text" placeholder="Enter Username" name="username" required>
 
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required>
+      <button type="submit" class="gobackButton">Login</button>
+    </form>
+    <?php
+      $db = new mysqli("localhost", "root", "root", "assignment3");
+      if ($db->connect_error) {
+        die("Could not connect: " . mysqli_connect_error());
+      }
 
-      <div>
-        <form action=<?php $_SESSION["rememberme"] = "checked";
-                    echo "./AdminPage.php" ?>>
-          <button type="submit" class="gobackButton">Login</button>
-        </form>
-        <label id="rememberme">
-          <input type="checkbox" name="remember" <?php if (isset($_SESSION["rememberme"]) and $_SESSION["rememberme"] != "") { ?> checked <?php } ?>> Remember me
-        </label>
-      </div>
-    </div>
+      $users = $db->query("SELECT * FROM users");
+      while($row = $users->fetch_assoc()) {
+        echo $row["username"];
+        echo '<br>';
+      }
+    
+    $db->close();
+    ?>
+    <script>
+      function validationLoginForm() {
+        var x = document.forms["loginForm"]["username"].value;
+        var y = document.forms["loginForm"]["password"].value;
+        if (x == "" || y == "") {
+          alert("Username or password is incorrect !");
+          return false;
+        }
+      }
+
+      function changeURL() {
+        var x = document.forms["loginForm"]["username"].value;
+        var y = document.forms["loginForm"]["password"].value;
+        console.log(x.length);
+        console.log(y.length);
+        if (x.length !== 0 && y.length != 0) {
+          window.location.href = "./AdminPage.php";
+        }
+      }
+    </script>
+    <label id="rememberme">
+      <input type="checkbox" name="remember" <?php if (isset($_SESSION["rememberme"]) and $_SESSION["rememberme"] != "") { ?> checked <?php } ?>> Remember me
+    </label>
+  </div>
+  </div>
   </div>
 </body>
 
