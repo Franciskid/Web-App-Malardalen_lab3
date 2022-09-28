@@ -9,11 +9,19 @@ if (isset($_POST['action'])) {
         case 'disconnect':
             disconnect();
             break;
+            
+        case 'search':
+            search($_POST['search']);
+            break;
     }
 }
 
 function disconnect()
 {
     $_SESSION["rememberme"] = "";
+}
+
+function search(string $val) {
+    
 }
 ?>
