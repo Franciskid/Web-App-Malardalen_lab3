@@ -10,6 +10,28 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" type="text/css" href="styles.css" />
   <link rel="stylesheet" type="text/css" href="styleAdminPage.css" />
   <link rel="stylesheet" type="text/css" href="styleLoginPage.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <script>
+    function login(){
+      var ajaxurl = 'ajax.php';
+      data = {
+        "action": "connect",
+        "user": $("#username").val(),
+        "password": $("#password").val()
+      };
+      $.post(ajaxurl, data, function(response) {
+        if (response == 1) {
+        window.location.href = "./AdminPage.php";
+        }
+        else {
+        alert("wrong password or username");
+        }
+      }).fail(function(response) {
+        alert("wrong password or username");
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -29,15 +51,17 @@ if (session_status() === PHP_SESSION_NONE) {
     </div>
   </div>
   <div class="content">
-    <form name="loginForm" action="./LoginPage.php">
-      <label for="uname"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="username" required>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
-      <button type="submit" class="gobackButton">Login</button>
-    </form>
-    <?php
+    <div class="login-container">
+      <form name="loginForm"  action="javascript:login()" method="POST" >
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
+        <button type="submit" class="gobackButton">Login</button>
+      </form>
+      <?php
 
       $db = new mysqli("localhost", "root", "root", "assignment3");
       if ($db->connect_error) {
@@ -51,21 +75,20 @@ if (session_status() === PHP_SESSION_NONE) {
           $password = $user->fetch_assoc()['password'];
           if ($password === $_GET['password']) {
             echo "<script>window.location.href = './AdminPage.php';</script>";
-          }
-          else {
+          } else {
             echo "<script>alert('The username or password is incorrect !');</script>";
           }
         }
-      }
-      else if (isset($_GET['password'])) {
+      } else if (isset($_GET['password'])) {
         echo "<script>alert('The username or password is incorrect !');</script>";
       }
-    
+
       $db->close();
-    ?>
-    <label id="rememberme">
-      <input type="checkbox" name="remember" <?php if (isset($_SESSION["rememberme"]) and $_SESSION["rememberme"] != "") { ?> checked <?php } ?>> Remember me
-    </label>
+      ?>
+      <label id="rememberme">
+        <input type="checkbox" name="remember" <?php if (isset($_SESSION["rememberme"]) and $_SESSION["rememberme"] != "") { ?> checked <?php } ?>> Remember me
+      </label>
+    </div>
   </div>
   </div>
   </div>
