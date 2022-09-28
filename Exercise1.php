@@ -81,31 +81,30 @@
         <div class="nasaEventsDiv">
           <div class="nasaEventDivText">
             <?php
-              // $db = new mysqli("localhost", "root", "root", "assignment3");
-              // if ($db->connect_error) {
-              //   die("Could not connect: " . mysqli_connect_error());
-              // }
-
-              // $news = $db->query("SELECT * FROM news ORDER BY date DESC LIMIT 1;");
-
-
-              $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-              $params = parse_url($url);
-              if (array_key_exists("query", $params) == 1 and checkArrayNotEmpty($params)) {
-                parse_str($params['query'], $param);
-                $json = file_get_contents("Ressources/".$param['jsonFile']); 
+              $db = new mysqli("localhost", "root", "root", "assignment3");
+              if ($db->connect_error) {
+                die("Could not connect: " . mysqli_connect_error());
               }
-              else {
-                $json = file_get_contents("Ressources/Ass2News.json");
+
+              $title = array();
+              $content = array();
+              $image = array();
+              $news = $db->query("SELECT * FROM news ORDER BY date DESC LIMIT 3;");
+              while ($row = $news->fetch_assoc()) {
+                array_push($title, $row["title"]);
+                array_push($content, $row["content"]);
+                if (isset($row["image_path"])) {
+                  array_push($image, $row["image_path"]);
+                } else {
+                  array_push($image, "Ressources/pic1.jpg");
+                }
               }
-              $data = json_decode($json, true);
-              $title = $data["news"][0]['title'];
-              echo "<h4>$title</h4>";
+              echo "<h4>$title[0]</h4>";
             ?>
             <div class="nasaEventsDivScrollbar"></div>
             <div class="eventText">
             <?php
-              echo $data["news"][0]["content"];
+              echo $content[0];
             ?>
             </div>
           </div>
@@ -122,8 +121,7 @@
       </div>
       <div class="grid-item item3">
         <?php
-          $image = $data["news"][1]['imgurl'];
-          echo "<img src='$image' />";
+          echo "<img src='$image[0]' />";
         ?>
         <div class="containerHiddenBoxes">
           <div class="toHideOnHover">
@@ -132,7 +130,7 @@
                 <a>
                 <b>
                   <?php
-                    echo $data["news"][1]["title"];
+                    echo $title[1];
                   ?>
                   </b>
                 </a>
@@ -141,7 +139,7 @@
                 <a class="textDecoration">
                 <b>
                   <?php
-                    echo $data["news"][1]["previewContent"];
+                    echo substr($content[1], 0, 55) . "...";
                   ?>
                   </b>
                 </a>
@@ -153,7 +151,7 @@
               <a class="textDecoration">
               <b>
                   <?php
-                    echo $data["news"][1]["content"];
+                    echo $content[1];
                   ?>
                   </b>
               </a>
@@ -165,17 +163,15 @@
         <div id="wrapper">
           <div id="first">
             <?php
-              $image = $data["news"][2]['imgurl'];
-              echo "<img src='$image' />";
+              echo "<img src='$image[1]' />";
             ?>
           </div>
           <div class="nasaStuff">
           <?php
-              $title = $data["news"][2]['title'];
-              echo "<h3>$title</h3>";
+              echo "<h3>$title[2]</h3>";
             ?>
             <?php
-              echo $data["news"][2]["content"];
+              echo $content[2];
             ?>
           </div>
         </div>

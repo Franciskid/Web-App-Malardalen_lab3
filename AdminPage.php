@@ -86,14 +86,8 @@ $_SESSION["rememberme"] = "checked";
           $date = $value['date'];
           if (isset($value['imgurl'])) {
             $image = $value['imgurl'];
-            if (isset($value['previewContent'])) {
-              $previewContent = $value['previewContent'];
-              $db->query("INSERT IGNORE INTO news (title, date, preview_content, content, image_path) VALUES ('$title', '$date', '$previewContent', '$content', '$image')");
-            } else {
-              $db->query("INSERT IGNORE INTO news (title, date, content, image_path) VALUES ('$title', '$date', '$content', '$image')");
-            }
-          }
-          else {
+            $db->query("INSERT IGNORE INTO news (title, date, content, image_path) VALUES ('$title', '$date', '$content', '$image')");
+          } else {
             $db->query("INSERT IGNORE INTO news (title, date, content) VALUES ('$title', '$date', '$content')");
           }
         }

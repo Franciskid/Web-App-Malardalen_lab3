@@ -11,7 +11,6 @@ PRIMARY KEY (username)
 CREATE TABLE IF NOT EXISTS news
 (
 title VARCHAR(100) NOT NULL,
-preview_content VARCHAR(200),
 content VARCHAR(500) NOT NULL,
 image_path VARCHAR(100),
 date DATETIME NOT NULL,
