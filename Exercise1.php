@@ -53,12 +53,12 @@ function checkArrayNotEmpty($array)
           <a href="#">Downloads</a> | <a href="#">About</a> |
           <a href="#">NASA Audiences</a>
         </nav>
-        <search>
-          <input type="text" placeholder="Search.." onchange="search()" id="search" />
-          <div>
-
+        <div class="dropdown">
+          <input type="text" placeholder="Search.." onkeypress="search()" id="search" />
+          <div class="dropdown-content">
+            <a href="#">Search</a>
           </div>
-        </search>
+        </div>
         <button class="sharing-icon" title="This button does nothing"></button>
         <form action=<?php if (isset($_SESSION["rememberme"]) and $_SESSION["rememberme"] != "") {
                         echo "./AdminPage.php";
