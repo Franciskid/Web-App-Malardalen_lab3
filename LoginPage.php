@@ -11,27 +11,6 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" type="text/css" href="styleAdminPage.css" />
   <link rel="stylesheet" type="text/css" href="styleLoginPage.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-  <script>
-    function login(){
-      var ajaxurl = 'ajax.php';
-      data = {
-        "action": "connect",
-        "user": $("#username").val(),
-        "password": $("#password").val()
-      };
-      $.post(ajaxurl, data, function(response) {
-        if (response == 1) {
-        window.location.href = "./AdminPage.php";
-        }
-        else {
-        alert("wrong password or username");
-        }
-      }).fail(function(response) {
-        alert("wrong password or username");
-      });
-    }
-  </script>
 </head>
 
 <body>
@@ -53,7 +32,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="content">
 
     <div class="login-container">
-      <form name="loginForm"  action="javascript:login()" method="POST" >
+      <form name="loginForm"  action="./LoginPage.php" method="POST" >
         <label for="uname"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
@@ -68,18 +47,18 @@ if (session_status() === PHP_SESSION_NONE) {
         die("Could not connect: " . mysqli_connect_error());
       }
 
-      if (isset($_GET['username'])) {
-        $username = $_GET['username'];
+      if (isset($_POST['username'])) {
+        $username = $_POST['username'];
         $user = $db->query("SELECT * FROM users WHERE username = '$username'");
         if ($user->num_rows > 0) {
           $password = $user->fetch_assoc()['password'];
-          if ($password === $_GET['password']) {
+          if ($password === $_POST['password']) {
             echo "<script>window.location.href = './AdminPage.php';</script>";
           } else {
             echo "<script>alert('The username or password is incorrect !');</script>";
           }
         }
-      } else if (isset($_GET['password'])) {
+      } else if (isset($_POST['password'])) {
         echo "<script>alert('The username or password is incorrect !');</script>";
       }
 

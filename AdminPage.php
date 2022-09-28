@@ -53,21 +53,6 @@ $_SESSION["rememberme"] = "checked";
         <input type="text" placeholder="Choose a text file" name="chooseTextFile">
         <input type="submit" value="Apply">
       </form>
-      <script>
-        function validationForm() {
-          var x = document.forms["myForm"]["chooseTextFile"].value;
-          const jsonFiles = ["Ass2News.json", "Ass2News2nd.json", "Ass2News3rd.json"];
-          if (x == "" || !jsonFiles.includes(x)) {
-            alert("The name of the file is incorrect !");
-            return false;
-          }
-        }
-
-        function changeUrl() {
-          var x = document.forms["myForm"]["chooseTextFile"].value;
-          window.location.href = "./Exercise1.php?jsonFile=" + x;
-        }
-      </script>
     </div>
     <?php
       $db = new mysqli("localhost", "root", "root", "assignment3");
