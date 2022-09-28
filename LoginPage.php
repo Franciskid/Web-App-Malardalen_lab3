@@ -10,6 +10,28 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" type="text/css" href="styles.css" />
   <link rel="stylesheet" type="text/css" href="styleAdminPage.css" />
   <link rel="stylesheet" type="text/css" href="styleLoginPage.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <script>
+    function login(){
+      var ajaxurl = 'ajax.php';
+      data = {
+        "action": "connect",
+        "user": $("#username").val(),
+        "password": $("#password").val()
+      };
+      $.post(ajaxurl, data, function(response) {
+        if (response == 1) {
+        window.location.href = "./AdminPage.php";
+        }
+        else {
+        alert("wrong password or username");
+        }
+      }).fail(function(response) {
+        alert("wrong password or username");
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -31,12 +53,12 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="content">
 
     <div class="login-container">
-      <form name="loginForm" action="./LoginPage.php">
+      <form name="loginForm"  action="javascript:login()" method="POST" >
         <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <input type="text" placeholder="Enter Username" name="username" id="username" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+        <input type="password" placeholder="Enter Password" name="password" id="password" required>
         <button type="submit" class="gobackButton">Login</button>
       </form>
       <?php
