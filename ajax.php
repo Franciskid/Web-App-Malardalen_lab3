@@ -11,7 +11,7 @@ if (isset($_POST['action'])) {
             break;
             
         case 'search':
-            search($_POST['search']);
+            echo json_encode(search($_POST['search']));
             break;
     }
 }
@@ -27,15 +27,13 @@ function search(string $val) {
         die("Could not connect: " . mysqli_connect_error());
       }
     
-    $sql = "SELECT * FROM `news` WHERE `title` LIKE '%.$val%'";
-
-    $result = $db->query($sql);
+    $result = $db->query("SELECT * FROM `news` WHERE `title` LIKE '%$val%';");
 
     $array_to_return = array();
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $array_to_return = $row;
+            array_push($array_to_return, $row["title"]);
         }
 
         return $array_to_return;

@@ -10,11 +10,12 @@ PRIMARY KEY (username)
 
 CREATE TABLE IF NOT EXISTS news
 (
+id INT NOT NULL AUTO_INCREMENT,
 title VARCHAR(100) NOT NULL,
 content VARCHAR(500) NOT NULL,
 image_path VARCHAR(100),
 date DATETIME NOT NULL,
-PRIMARY KEY (title)
+PRIMARY KEY (id)
 );
 
 INSERT IGNORE INTO users (username, password) VALUES ('tculino', 'thomas');

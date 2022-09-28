@@ -31,9 +31,20 @@ function checkArrayNotEmpty($array)
         'action': "search",
         'search': $("#search").val()
       };
-      $.post(ajaxurl, data, function(response) {
-        alert(response);
-      });
+      $.ajax({
+            type: 'POST',
+            url: 'ajax.php',
+            data: data,
+            dataType: 'json',
+            cache: false,
+            success: function(result) {
+              console.log(result);
+              document.getElementById("searchbar").innerHTML = result.map((data) => {
+                return `<a href="./newsPage.php">${data}</a>`
+          }).join('');
+
+            }
+        });
     };
   </script>
 </head>
@@ -55,8 +66,7 @@ function checkArrayNotEmpty($array)
         </nav>
         <div class="dropdown">
           <input type="text" placeholder="Search.." onkeypress="search()" id="search" />
-          <div class="dropdown-content">
-            <a href="#">Search</a>
+          <div class="dropdown-content" id="searchbar">
           </div>
         </div>
         <button class="sharing-icon" title="This button does nothing"></button>
