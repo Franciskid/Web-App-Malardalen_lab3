@@ -53,41 +53,74 @@ $_SESSION["rememberme"] = "checked";
         <input type="text" placeholder="Choose a text file" name="chooseTextFile">
         <input type="submit" value="Apply">
       </form>
+      <form action="./AdminPage.php" method="POST" enctype="multipart/form-data">
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <input type="submit" value="Upload News" name="submit">
+      </form>
     </div>
     <?php
+      $files = array();
+      $currentDirectory = getcwd();
+      $uploadDirectory = "./Ressources/";
+      $errors = [];
+      $fileExtensionsAllowed = ['json'];
+      if (isset($_FILES['fileToUpload']['name'])) {
+        $fileName = $_FILES['fileToUpload']['name'];
+        $fileTmpName  = $_FILES['fileToUpload']['tmp_name'];
+        $exploded = explode('.',$fileName);
+        $fileExtension = strtolower(end($exploded));
+    
+        $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName); 
+    
+        if (isset($_POST['submit'])) {
+    
+          if (!in_array($fileExtension,$fileExtensionsAllowed)) {
+            $errors[] = "This file extension is not allowed. Please upload a JSON file ";
+          }
+    
+          if (empty($errors)) {
+            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+    
+            if ($didUpload) {
+              echo "The file " . basename($fileName) . " has been uploaded";
+              if (!in_array(basename($fileName), $files)) {
+                array_push($files, basename($fileName));
+              }
+            } else {
+              echo "An error occurred. Please contact the administrator.";
+            }
+          } 
+        }
+      }
+
       $db = new mysqli("localhost", "root", "root", "assignment3");
       if ($db->connect_error) {
         die("Could not connect: " . mysqli_connect_error());
       }
 
-      $files = array("Ass2News.json", "Ass2News2nd.json", "Ass2News3rd.json");
       foreach ($files as $file) {
-        $path = "Ressources/".$file;
-        $json = file_get_contents($path);
-        $data = json_decode($json, true);
-        foreach ($data['news'] as $key => $value) {
-          $title = $value['title'];
-          $content = $value['content'];
-          $date = $value['date'];
-          if (isset($value['imgurl'])) {
-            $image = $value['imgurl'];
-            $db->query("INSERT IGNORE INTO news (title, date, content, image_path) VALUES ('$title', '$date', '$content', '$image')");
-          } else {
-            $db->query("INSERT IGNORE INTO news (title, date, content) VALUES ('$title', '$date', '$content')");
+        if (isset($file)) {
+          $path = "Ressources/".$file;
+          $json = file_get_contents($path);
+          $data = json_decode($json, true);
+          foreach ($data['news'] as $key => $value) {
+            $title = $value['title'];
+            $content = $value['content'];
+            $date = $value['date'];
+            if (isset($value['imgurl'])) {
+              $image = $value['imgurl'];
+              $db->query("INSERT IGNORE INTO news (title, date, content, image_path) VALUES ('$title', '$date', '$content', '$image')");
+            } else {
+              $db->query("INSERT IGNORE INTO news (title, date, content) VALUES ('$title', '$date', '$content')");
+            }
           }
+          unlink($path);
         }
       }
 
       $db->close();
     ?>
-    <h3>List of files availables</h3>
-    <ul>
-      <li>Ass2News.json</li>
-      <li>Ass2News2nd.json</li>
-      <li>Ass2News3rd.json</li>
-    </ul>
   </div>
-
 </body>
 
 </html>

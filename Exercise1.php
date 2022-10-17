@@ -40,9 +40,8 @@ function checkArrayNotEmpty($array)
             success: function(result) {
               console.log(result);
               document.getElementById("searchbar").innerHTML = result.map((data) => {
-                return `<a href="./newsPage.php">${data}</a>`
-          }).join('');
-
+                return `<a href="./newsPage.php?id=${data["id"]}">${data["title"]}</a>`
+              }).join('');
             }
         });
     };

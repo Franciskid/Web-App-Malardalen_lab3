@@ -27,19 +27,19 @@ function search(string $val) {
         die("Could not connect: " . mysqli_connect_error());
       }
     
-    $result = $db->query("SELECT * FROM `news` WHERE `title` LIKE '%$val%';");
+    $result = $db->query("SELECT * FROM `news` WHERE `title` LIKE '%$val%' LIMIT 5;");
 
     $array_to_return = array();
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            array_push($array_to_return, $row["title"]);
+            array_push($array_to_return, $row);
         }
 
         return $array_to_return;
     } else {
         return False;
     }
-
 }
+
 ?>

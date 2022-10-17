@@ -14,21 +14,21 @@ if (session_status() === PHP_SESSION_NONE) {
     <link rel="stylesheet" type="text/css" href="styleAdminPage.css" />
     <link rel="stylesheet" type="text/css" href="styleLoginPage.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <?php 
-
-$myfile = fopen("Ressources/NewsToDisplayInNewsPage.json", "r") or die("Unable to open file!");
-$filesize = filesize("Ressources/NewsToDisplayInNewsPage.json");
-if ($filesize > 0) {
-  $json = file_get_contents("Ressources/"."NewsToDisplayInNewsPage".".json"); 
-}
-else {
-  $json = file_get_contents("Ressources/Ass2News.json");
-}
-fclose($myfile);
-
-$data = json_decode($json, true);
+        $id = $_GET['id'];
+        $db = new mysqli("localhost", "root", "root", "assignment3");
+        if ($db->connect_error) {
+        die("Could not connect: " . mysqli_connect_error());
+        }
     
+        $result = $db->query("SELECT * FROM `news` WHERE `id`=$id;");
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $title = $row['title'];
+                $content = $row['content'];
+            }    
+        }
     ?>
 </head>
 
@@ -52,15 +52,13 @@ $data = json_decode($json, true);
     <div class="textFile">
         <h1>
             <?php 
-$title = $data["news"]['title'];
-echo $title;
+            echo $title;
             ?>
         </h1>
 
         <p>
             <?php 
-$title = $data["news"]['content'];
-echo $title;
+            echo $content;
             ?>
         </p>
     </div>
